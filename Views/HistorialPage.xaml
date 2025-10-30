@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShopList.Views.HistorialPage"
+             Title="Historial">
+    <CollectionView ItemsSource="{Binding Items}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame Margin="8">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding CompletedAt, StringFormat='Completado: {0:dd/MM/yyyy HH:mm}'}" FontAttributes="Bold"/>
+                        <CollectionView ItemsSource="{Binding Products}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding Name}" FontSize="14"/>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

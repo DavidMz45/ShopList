@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShopList.Views.ListaPage"
+             Title="Lista">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Añadir" Clicked="OnAddClicked" />
+        <ToolbarItem Text="Guardar" Clicked="OnSaveClicked" />
+    </ContentPage.ToolbarItems>
+
+    <VerticalStackLayout>
+        <CollectionView x:Name="ProductsView" ItemsSource="{Binding Products}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="8" ColumnDefinitions="40,*,Auto">
+                        <CheckBox IsChecked="{Binding IsBought}" CheckedChanged="OnCheckedChanged"/>
+                        <StackLayout Grid.Column="1">
+                            <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Quantity, StringFormat='Cantidad: {0}'}" FontSize="12"/>
+                        </StackLayout>
+                        <Button Grid.Column="2" Text="Editar" Clicked="OnEditClicked" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Completar comprados" Clicked="OnCompleteClicked" VerticalOptions="End" Margin="10"/>
+    </VerticalStackLayout>
+</ContentPage>

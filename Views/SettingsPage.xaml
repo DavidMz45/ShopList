@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShopList.Views.SettingsPage"
+             Title="Ajustes">
+    <VerticalStackLayout Padding="12">
+        <Label Text="Orden" />
+        <Picker SelectedItem="{Binding Settings.OrderBy}">
+            <Picker.Items>
+                <x:String>Alphabetical</x:String>
+                <x:String>Category</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <Label Text="Tema" />
+        <Picker SelectedItem="{Binding Settings.Theme}">
+            <Picker.Items>
+                <x:String>Light</x:String>
+                <x:String>Dark</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <HorizontalStackLayout VerticalOptions="Center">
+            <Label Text="Confirmar antes de eliminar" VerticalOptions="Center"/>
+            <Switch IsToggled="{Binding Settings.ConfirmBeforeDelete}" />
+        </HorizontalStackLayout>
+
+        <Button Text="Guardar" Command="{Binding SaveCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

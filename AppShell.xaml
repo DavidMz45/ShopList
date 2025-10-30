@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:ShopList.Views"
+    x:Class="ShopList.AppShell">
+    <ShellItem>
+        <ShellSection>
+            <ShellContent Title="Splash" ContentTemplate="{DataTemplate views:SplashPage}" Route="splash" />
+        </ShellSection>
+    </ShellItem>
+    <TabBar>
+        <ShellContent Title="Lista" ContentTemplate="{DataTemplate views:ListaPage}" Route="lista" />
+        <ShellContent Title="Categorias" ContentTemplate="{DataTemplate views:CategoriasPage}" Route="categorias" />
+        <ShellContent Title="Plantillas" ContentTemplate="{DataTemplate views:PlantillasPage}" Route="plantillas" />
+        <ShellContent Title="Historial" ContentTemplate="{DataTemplate views:HistorialPage}" Route="historial" />
+        <ShellContent Title="Ajustes" ContentTemplate="{DataTemplate views:SettingsPage}" Route="settings" />
+        <ShellContent Title="Estadísticas" ContentTemplate="{DataTemplate views:EstadisticasPage}" Route="estadisticas" />
+    </TabBar>
+</Shell>

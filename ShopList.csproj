@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net8.0-android;net8.0-windows10.0.19041.0;net8.0-ios</TargetFrameworks>
+    <UseMaui>true</UseMaui>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>ShopList</RootNamespace>
+    <ApplicationTitle>ShopList</ApplicationTitle>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MauiXaml Include="**\*.xaml" />
+  </ItemGroup>
+</Project>
