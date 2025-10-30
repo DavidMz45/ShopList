@@ -1,16 +1,21 @@
 using Microsoft.Maui.Controls;
 using ShopList.ViewModels;
 
-namespace ShopList.Views
+namespace ShopList.Views;
+
+public partial class HistorialPage : ContentPage
 {
-    public partial class HistorialPage : ContentPage
+    private readonly HistorialViewModel _viewModel;
+
+    public HistorialPage(HistorialViewModel viewModel)
     {
-        HistorialViewModel vm;
-        public HistorialPage()
-        {
-            InitializeComponent();
-            vm = new HistorialViewModel();
-            BindingContext = vm;
-        }
+        InitializeComponent();
+        BindingContext = _viewModel = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.LoadCommand.ExecuteAsync(null);
     }
 }

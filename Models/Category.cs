@@ -1,10 +1,13 @@
-using System;
+using SQLite;
 
-namespace ShopList.Models
+namespace ShopList.Models;
+
+public class Category
 {
-    public class Category
-    {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
-        public string Name { get; set; }
-    }
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
+
+    [Unique]
+    [MaxLength(80)]
+    public string Name { get; set; } = string.Empty;
 }

@@ -1,53 +1,166 @@
-using ShopList.Models;
-using ShopList.Services;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
+using ShopList.Models;
+using ShopList.Repositories;
 
-namespace ShopList.ViewModels
+namespace ShopList.ViewModels;
+
+public partial class PlantillasViewModel : BaseViewModel
 {
-    public class PlantillasViewModel : BaseViewModel
+    private readonly ITemplateRepository _templateRepository;
+    private readonly IProductRepository _productRepository;
+
+    public ObservableCollection<TemplateList> Templates { get; } = new();
+
+    [ObservableProperty]
+    private string templateName = string.Empty;
+
+    [ObservableProperty]
+    private TemplateList? selectedTemplate;
+
+    public PlantillasViewModel(ITemplateRepository templateRepository, IProductRepository productRepository)
     {
-        public ObservableCollection<TemplateList> Templates { get; } = new();
-        public string NewName { get; set; }
-        public ICommand SaveCurrentAsTemplateCommand { get; }
-        public ICommand ApplyTemplateCommand { get; }
+        _templateRepository = templateRepository;
+        _productRepository = productRepository;
+        Title = "Plantillas";
+    }
 
-        public PlantillasViewModel()
+    [RelayCommand]
+    private async Task LoadAsync()
+    {
+        if (IsBusy)
         {
-            SaveCurrentAsTemplateCommand = new Command(async () => await SaveAsTemplate());
-            ApplyTemplateCommand = new Command<TemplateList>(async (t) => await ApplyTemplate(t));
-            Load();
+            return;
         }
 
-        void Load()
+        try
         {
+            SetBusy(true);
+            var templates = await _templateRepository.GetAllAsync();
             Templates.Clear();
-            foreach(var t in DataService.Instance.Templates) Templates.Add(t);
+            foreach (var template in templates)
+            {
+                Templates.Add(template);
+            }
+        }
+        finally
+        {
+            SetBusy(false);
+        }
+    }
+
+    [RelayCommand]
+    private void StartNew()
+    {
+        TemplateName = string.Empty;
+        SelectedTemplate = null;
+    }
+
+    [RelayCommand]
+    private void Select(TemplateList template)
+    {
+        SelectedTemplate = template;
+        TemplateName = template.Name;
+    }
+
+    [RelayCommand]
+    private async Task SaveAsync()
+    {
+        if (string.IsNullOrWhiteSpace(TemplateName))
+        {
+            await Shell.Current.DisplayAlert("Validación", "El nombre es obligatorio.", "Aceptar");
+            return;
         }
 
-        async System.Threading.Tasks.Task SaveAsTemplate()
+        var products = await _productRepository.GetPendingAsync();
+        if (!products.Any())
         {
-            if (string.IsNullOrWhiteSpace(NewName)) return;
-            var tpl = new TemplateList { Name = NewName.Trim() };
-            tpl.Products = DataService.Instance.Products.Select(p => new Product {
-                Name = p.Name, Quantity = p.Quantity, Unit = p.Unit, CategoryId = p.CategoryId
-            }).ToList();
-            DataService.Instance.Templates.Add(tpl);
-            NewName = "";
-            Load();
-            await DataService.Instance.SaveAsync();
+            await Shell.Current.DisplayAlert("Información", "No hay productos para guardar en la plantilla.", "Aceptar");
+            return;
         }
 
-        async System.Threading.Tasks.Task ApplyTemplate(TemplateList tpl)
+        try
         {
-            if (tpl == null) return;
-            DataService.Instance.Products = tpl.Products.Select(p => new Product {
-                Name = p.Name, Quantity = p.Quantity, Unit = p.Unit, CategoryId = p.CategoryId
+            var template = SelectedTemplate ?? new TemplateList();
+            template.Name = TemplateName.Trim();
+            template.Items = products.Select(p => new Product
+            {
+                Name = p.Name,
+                Quantity = p.Quantity,
+                CategoryId = p.CategoryId,
+                IsPurchased = false
             }).ToList();
-            await DataService.Instance.SaveAsync();
-            await Shell.Current.GoToAsync("//lista");
+
+            await _templateRepository.SaveAsync(template);
+            await LoadAsync();
+            StartNew();
+            await Shell.Current.DisplayAlert("Éxito", "Plantilla guardada.", "Aceptar");
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", ex.Message, "Aceptar");
+        }
+    }
+
+    [RelayCommand]
+    private async Task ApplyAsync(TemplateList template)
+    {
+        try
+        {
+            var confirm = await Shell.Current.DisplayAlert("Confirmación", $"¿Cargar la plantilla {template.Name}?", "Sí", "No");
+            if (!confirm)
+            {
+                return;
+            }
+
+            foreach (var item in template.Items)
+            {
+                var product = new Product
+                {
+                    Name = item.Name,
+                    Quantity = item.Quantity,
+                    CategoryId = item.CategoryId,
+                    IsPurchased = false
+                };
+
+                await _productRepository.SaveAsync(product);
+            }
+
+            await Shell.Current.DisplayAlert("Éxito", "Plantilla aplicada a la lista.", "Aceptar");
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", ex.Message, "Aceptar");
+        }
+    }
+
+    [RelayCommand]
+    private async Task DeleteAsync(TemplateList template)
+    {
+        try
+        {
+            var confirm = await Shell.Current.DisplayAlert("Confirmación", $"¿Eliminar la plantilla {template.Name}?", "Sí", "No");
+            if (!confirm)
+            {
+                return;
+            }
+
+            await _templateRepository.DeleteAsync(template.Id);
+            await LoadAsync();
+            if (SelectedTemplate?.Id == template.Id)
+            {
+                StartNew();
+            }
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", ex.Message, "Aceptar");
         }
     }
 }

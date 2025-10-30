@@ -3,18 +3,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShopList.Views.PlantillasPage"
              Title="Plantillas">
-    <VerticalStackLayout Padding="12">
-        <Entry Placeholder="Nombre plantilla" Text="{Binding NewName}" />
-        <Button Text="Guardar plantilla (desde la lista actual)" Command="{Binding SaveCurrentAsTemplateCommand}" />
-        <CollectionView ItemsSource="{Binding Templates}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="6" ColumnDefinitions="*,Auto">
-                        <Label Text="{Binding Name}" />
-                        <Button Text="Aplicar" Grid.Column="1" Command="{Binding Source={RelativeSource AncestorType={x:Type local:PlantillasPage}}, Path=BindingContext.ApplyTemplateCommand}" CommandParameter="{Binding .}" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Spacing="16"
+                              SemanticProperties.Description="Gestión de plantillas">
+            <Label Text="Nombre de la plantilla"
+                   FontAttributes="Bold" />
+            <Entry Text="{Binding TemplateName}"
+                   Placeholder="Ej. Fin de semana"
+                   MaxLength="80" />
+            <Button Text="Guardar plantilla"
+                    Command="{Binding SaveCommand}" />
+            <Button Text="Nueva"
+                    BackgroundColor="Transparent"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    Command="{Binding StartNewCommand}" />
+
+            <CollectionView ItemsSource="{Binding Templates}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12"
+                               Margin="0,4"
+                               CornerRadius="12"
+                               BackgroundColor="{DynamicResource CardBackgroundColor}">
+                            <Grid ColumnDefinitions="*,Auto,Auto"
+                                  ColumnSpacing="12">
+                                <StackLayout>
+                                    <Label Text="{Binding Name}"
+                                           FontAttributes="Bold" />
+                                    <Label Text="{Binding Items.Count, StringFormat=Productos: {0}}" />
+                                </StackLayout>
+                                <Button Grid.Column="1"
+                                        Text="Cargar"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ApplyCommand}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Grid.Column="2"
+                                        Text="🗑"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

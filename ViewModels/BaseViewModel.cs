@@ -1,15 +1,20 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace ShopList.ViewModels
+namespace ShopList.ViewModels;
+
+public abstract partial class BaseViewModel : ObservableObject
 {
-    public class BaseViewModel : INotifyPropertyChanged
-    {
-        bool isBusy;
-        public bool IsBusy { get => isBusy; set { isBusy = value; OnPropertyChanged(); } }
+    [ObservableProperty]
+    private bool isBusy;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName]string name = null) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    [ObservableProperty]
+    private string title = string.Empty;
+
+    public bool IsNotBusy => !IsBusy;
+
+    protected void SetBusy(bool value)
+    {
+        IsBusy = value;
+        OnPropertyChanged(nameof(IsNotBusy));
     }
 }

@@ -4,15 +4,29 @@
              x:Class="ShopList.Views.EstadisticasPage"
              Title="Estadísticas">
     <ScrollView>
-        <VerticalStackLayout Padding="10">
-            <Label Text="Conteo por categoría" FontAttributes="Bold"/>
-            <CollectionView ItemsSource="{Binding CountByCategory}">
+        <VerticalStackLayout Spacing="16"
+                              SemanticProperties.Description="Estadísticas de compras">
+            <CollectionView ItemsSource="{Binding Statistics}"
+                            SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="24"
+                                 HorizontalOptions="Center">
+                        <Label Text="No hay datos disponibles todavía." />
+                    </StackLayout>
+                </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="*,Auto" Padding="6">
-                            <Label Text="{Binding Key}" />
-                            <Label Text="{Binding Value}" Grid.Column="1"/>
-                        </Grid>
+                        <Frame Padding="12"
+                               Margin="0,4"
+                               CornerRadius="12"
+                               BackgroundColor="{DynamicResource CardBackgroundColor}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Text="{Binding Category}"
+                                       FontAttributes="Bold" />
+                                <Label Grid.Column="1"
+                                       Text="{Binding Count, StringFormat={0} comprados}" />
+                            </Grid>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

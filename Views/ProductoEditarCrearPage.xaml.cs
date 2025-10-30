@@ -1,16 +1,43 @@
+using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using ShopList.ViewModels;
 
-namespace ShopList.Views
+namespace ShopList.Views;
+
+public partial class ProductoEditarCrearPage : ContentPage, IQueryAttributable
 {
-    public partial class ProductoEditarCrearPage : ContentPage
+    private readonly ProductoEditViewModel _viewModel;
+    private int? _productId;
+    private bool _isInitialized;
+
+    public ProductoEditarCrearPage(ProductoEditViewModel viewModel)
     {
-        ProductoEditarCrearViewModel vm;
-        public ProductoEditarCrearPage()
+        InitializeComponent();
+        BindingContext = _viewModel = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        if (!_isInitialized)
         {
-            InitializeComponent();
-            vm = new ProductoEditarCrearViewModel();
-            BindingContext = vm;
+            await _viewModel.InitializeAsync(_productId);
+            _isInitialized = true;
+        }
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.TryGetValue("ProductId", out var value))
+        {
+            if (value is int id)
+            {
+                _productId = id;
+            }
+            else if (value is string str && int.TryParse(str, out var parsed))
+            {
+                _productId = parsed;
+            }
         }
     }
 }

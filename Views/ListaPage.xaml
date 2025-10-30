@@ -4,26 +4,113 @@
              x:Class="ShopList.Views.ListaPage"
              Title="Lista">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Añadir" Clicked="OnAddClicked" />
-        <ToolbarItem Text="Guardar" Clicked="OnSaveClicked" />
+        <ToolbarItem Text="ℹ️"
+                     Order="Primary"
+                     Priority="0"
+                     Command="{Binding NavigateToAboutCommand}" />
     </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Spacing="16"
+                              SemanticProperties.Description="Lista de productos pendientes">
+            <Label Text="Tus productos"
+                   FontAttributes="Bold"
+                   FontSize="{DynamicResource TitleFontSize}" />
 
-    <VerticalStackLayout>
-        <CollectionView x:Name="ProductsView" ItemsSource="{Binding Products}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="8" ColumnDefinitions="40,*,Auto">
-                        <CheckBox IsChecked="{Binding IsBought}" CheckedChanged="OnCheckedChanged"/>
-                        <StackLayout Grid.Column="1">
-                            <Label Text="{Binding Name}" FontAttributes="Bold"/>
-                            <Label Text="{Binding Quantity, StringFormat='Cantidad: {0}'}" FontSize="12"/>
-                        </StackLayout>
-                        <Button Grid.Column="2" Text="Editar" Clicked="OnEditClicked" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            <Picker Title="Filtrar por categoría"
+                    ItemsSource="{Binding FilterCategories}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedFilter}" />
 
-        <Button Text="Completar comprados" Clicked="OnCompleteClicked" VerticalOptions="End" Margin="10"/>
-    </VerticalStackLayout>
+            <FlexLayout Wrap="Wrap"
+                        JustifyContent="SpaceBetween"
+                        AlignItems="Center">
+                <Button Text="Agregar producto"
+                        Margin="0,0,8,8"
+                        Command="{Binding AddProductCommand}" />
+                <Button Text="✔️ Finalizar lista"
+                        Margin="0,0,8,8"
+                        Command="{Binding CompleteListCommand}" />
+                <Button Text="🗑 Limpiar"
+                        Margin="0,0,8,8"
+                        Command="{Binding ClearListCommand}" />
+            </FlexLayout>
+
+            <FlexLayout Wrap="Wrap"
+                        JustifyContent="SpaceAround"
+                        AlignItems="Center">
+                <Button Text="📦 Categorías"
+                        Margin="0,0,8,8"
+                        Command="{Binding NavigateToCategoriesCommand}" />
+                <Button Text="📝 Plantillas"
+                        Margin="0,0,8,8"
+                        Command="{Binding NavigateToPlantillasCommand}" />
+                <Button Text="📜 Historial"
+                        Margin="0,0,8,8"
+                        Command="{Binding NavigateToHistorialCommand}" />
+                <Button Text="⚙️ Configuración"
+                        Margin="0,0,8,8"
+                        Command="{Binding NavigateToSettingsCommand}" />
+                <Button Text="📊 Estadísticas"
+                        Margin="0,0,8,8"
+                        Command="{Binding NavigateToEstadisticasCommand}" />
+            </FlexLayout>
+
+            <CollectionView ItemsSource="{Binding Products}"
+                            SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="24"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                        <Label Text="No hay productos en la lista." />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="0,4"
+                               Padding="12"
+                               BackgroundColor="{DynamicResource CardBackgroundColor}"
+                               BorderColor="{DynamicResource PrimaryColor}"
+                               CornerRadius="12">
+                            <Grid ColumnDefinitions="Auto,*,Auto,Auto"
+                                  ColumnSpacing="12"
+                                  VerticalOptions="Center">
+                                <CheckBox Grid.Column="0"
+                                          IsChecked="{Binding IsPurchased}"
+                                          CheckedChanged="OnProductCheckedChanged"
+                                          SemanticProperties.Hint="Marca si el producto fue comprado" />
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label Text="{Binding Name}"
+                                           FontAttributes="Bold">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label"
+                                                        Binding="{Binding IsPurchased}"
+                                                        Value="True">
+                                                <Setter Property="TextDecorations" Value="Strikethrough" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label Text="{Binding CategoryName, StringFormat=Categoría: {0}}"
+                                           FontSize="{DynamicResource BodyFontSize}" />
+                                    <Label Text="{Binding Quantity, StringFormat=Cantidad: {0}}"
+                                           FontSize="{DynamicResource BodyFontSize}" />
+                                </VerticalStackLayout>
+                                <Button Grid.Column="2"
+                                        Text="✎"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditProductCommand}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Grid.Column="3"
+                                        Text="🗑"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteProductCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
