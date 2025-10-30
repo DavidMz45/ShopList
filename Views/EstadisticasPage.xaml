@@ -24,7 +24,8 @@
                                 <Label Text="{Binding Category}"
                                        FontAttributes="Bold" />
                                 <Label Grid.Column="1"
-                                       Text="{Binding Count, StringFormat={0} comprados}" />
+                                       />
+                                <!--Text="{Binding Count, StringFormat={0} comprados}"-->
                             </Grid>
                         </Frame>
                     </DataTemplate>

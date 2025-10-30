@@ -1,32 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <OnAppTheme x:Key="PrimaryColor" x:TypeArguments="Color">
-        <OnAppTheme.Light>#2F80ED</OnAppTheme.Light>
-        <OnAppTheme.Dark>#6FA8FF</OnAppTheme.Dark>
-    </OnAppTheme>
-    <OnAppTheme x:Key="SecondaryColor" x:TypeArguments="Color">
-        <OnAppTheme.Light>#56CCF2</OnAppTheme.Light>
-        <OnAppTheme.Dark>#8DD1FF</OnAppTheme.Dark>
-    </OnAppTheme>
-    <OnAppTheme x:Key="AccentColor" x:TypeArguments="Color">
-        <OnAppTheme.Light>#27AE60</OnAppTheme.Light>
-        <OnAppTheme.Dark>#6FCF97</OnAppTheme.Dark>
-    </OnAppTheme>
-    <OnAppTheme x:Key="BackgroundColor" x:TypeArguments="Color">
-        <OnAppTheme.Light>#FFFFFF</OnAppTheme.Light>
-        <OnAppTheme.Dark>#121212</OnAppTheme.Dark>
-    </OnAppTheme>
-    <OnAppTheme x:Key="CardBackgroundColor" x:TypeArguments="Color">
-        <OnAppTheme.Light>#F2F2F2</OnAppTheme.Light>
-        <OnAppTheme.Dark>#1F1F1F</OnAppTheme.Dark>
-    </OnAppTheme>
-    <OnAppTheme x:Key="TextPrimaryColor" x:TypeArguments="Color">
-        <OnAppTheme.Light>#222222</OnAppTheme.Light>
-        <OnAppTheme.Dark>#FFFFFF</OnAppTheme.Dark>
-    </OnAppTheme>
-    <OnAppTheme x:Key="TextSecondaryColor" x:TypeArguments="Color">
-        <OnAppTheme.Light>#4F4F4F</OnAppTheme.Light>
-        <OnAppTheme.Dark>#E0E0E0</OnAppTheme.Dark>
-    </OnAppTheme>
+    <Color x:Key="PrimaryColor">#512BD4</Color>
+    <Color x:Key="SecondaryColor">#2B0B98</Color>
+    <Color x:Key="AccentColor">#FFB74D</Color>
+    <Color x:Key="BackgroundColorLight">#F5F5F5</Color>
+    <Color x:Key="BackgroundColorDark">#1E1E1E</Color>
+    <Color x:Key="TextColorLight">#1C1C1C</Color>
+    <Color x:Key="TextColorDark">#FFFFFF</Color>
+    <Color x:Key="CardBackgroundLight">#FFFFFF</Color>
+    <Color x:Key="CardBackgroundDark">#2A2A2A</Color>
+    <Color x:Key="PlaceholderColorLight">#8A8A8A</Color>
+    <Color x:Key="PlaceholderColorDark">#B3B3B3</Color>
+    <Color x:Key="ErrorColor">#E53935</Color>
 </ResourceDictionary>

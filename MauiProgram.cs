@@ -1,12 +1,9 @@
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui;
-using Microsoft.Maui.Hosting;
 using ShopList.Data;
 using ShopList.Repositories;
 using ShopList.Services;
 using ShopList.ViewModels;
 using ShopList.Views;
-
 namespace ShopList;
 
 public static class MauiProgram

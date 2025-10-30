@@ -1,58 +1,57 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Colors.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
-    <!-- Brushes -->
-    <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource PrimaryColor}" />
-    <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource SecondaryColor}" />
-    <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource AccentColor}" />
-    <SolidColorBrush x:Key="BackgroundBrush" Color="{DynamicResource BackgroundColor}" />
-    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{DynamicResource CardBackgroundColor}" />
-    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{DynamicResource TextPrimaryColor}" />
-    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{DynamicResource TextSecondaryColor}" />
-
-    <!-- Typography -->
-    <OnAppTheme x:Key="TitleFontSize" x:TypeArguments="x:Double">
-        <OnAppTheme.Light>22</OnAppTheme.Light>
-        <OnAppTheme.Dark>22</OnAppTheme.Dark>
-    </OnAppTheme>
-    <OnAppTheme x:Key="BodyFontSize" x:TypeArguments="x:Double">
-        <OnAppTheme.Light>16</OnAppTheme.Light>
-        <OnAppTheme.Dark>16</OnAppTheme.Dark>
-    </OnAppTheme>
-
-    <!-- Page Style -->
     <Style TargetType="ContentPage">
-        <Setter Property="BackgroundColor" Value="{DynamicResource BackgroundColor}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource BackgroundColorLight}, Dark={StaticResource BackgroundColorDark}}" />
         <Setter Property="Padding" Value="16" />
     </Style>
 
     <Style TargetType="Label">
-        <Setter Property="TextColor" Value="{DynamicResource TextPrimaryColor}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
         <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
     </Style>
 
     <Style TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
         <Setter Property="TextColor" Value="White" />
         <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
         <Setter Property="Padding" Value="12,8" />
-        <Setter Property="FontAttributes" Value="Bold" />
     </Style>
 
     <Style TargetType="Entry">
-        <Setter Property="TextColor" Value="{DynamicResource TextPrimaryColor}" />
-        <Setter Property="PlaceholderColor" Value="{DynamicResource TextSecondaryColor}" />
+        <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource PlaceholderColorLight}, Dark={StaticResource PlaceholderColorDark}}" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="Margin" Value="0,0,0,4" />
+    </Style>
+
+    <Style TargetType="SearchBar">
+        <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource PlaceholderColorLight}, Dark={StaticResource PlaceholderColorDark}}" />
+        <Setter Property="CancelButtonColor" Value="{StaticResource PrimaryColor}" />
+    </Style>
+
+    <Style TargetType="CollectionView">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+    <Style TargetType="Editor">
+        <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource PlaceholderColorLight}, Dark={StaticResource PlaceholderColorDark}}" />
     </Style>
 
     <Style TargetType="Picker">
-        <Setter Property="TextColor" Value="{DynamicResource TextPrimaryColor}" />
-    </Style>
-
-    <Style TargetType="CheckBox">
-        <Setter Property="Color" Value="{DynamicResource AccentColor}" />
+        <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextColorLight}, Dark={StaticResource TextColorDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
     </Style>
 </ResourceDictionary>

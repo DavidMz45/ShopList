@@ -24,10 +24,9 @@ public partial class ListaPage : ContentPage
     {
         if (sender is CheckBox checkBox && checkBox.BindingContext is Product product)
         {
-            if (e.Value != e.PreviousValue)
-            {
+          
                 await _viewModel.TogglePurchasedCommand.ExecuteAsync(product);
-            }
+            
         }
     }
 }
