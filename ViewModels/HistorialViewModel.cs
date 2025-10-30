@@ -1,27 +1,45 @@
-using ShopList.Models;
-using ShopList.Services;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using System.Linq;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
+using ShopList.Models;
+using ShopList.Repositories;
 
-namespace ShopList.ViewModels
+namespace ShopList.ViewModels;
+
+public partial class HistorialViewModel : BaseViewModel
 {
-    public class HistorialViewModel : BaseViewModel
-    {
-        public ObservableCollection<HistoryItem> Items { get; } = new();
-        public ICommand LoadCommand { get; }
+    private readonly IHistoryRepository _historyRepository;
 
-        public HistorialViewModel()
+    public ObservableCollection<History> HistoryItems { get; } = new();
+
+    public HistorialViewModel(IHistoryRepository historyRepository)
+    {
+        _historyRepository = historyRepository;
+        Title = "Historial";
+    }
+
+    [RelayCommand]
+    private async Task LoadAsync()
+    {
+        if (IsBusy)
         {
-            LoadCommand = new Command(Load);
-            Load();
+            return;
         }
 
-        void Load()
+        try
         {
-            Items.Clear();
-            var ordered = DataService.Instance.History.OrderByDescending(h => h.CompletedAt);
-            foreach(var h in ordered) Items.Add(h);
+            SetBusy(true);
+            var histories = await _historyRepository.GetAllAsync();
+            HistoryItems.Clear();
+            foreach (var history in histories)
+            {
+                HistoryItems.Add(history);
+            }
+        }
+        finally
+        {
+            SetBusy(false);
         }
     }
 }
