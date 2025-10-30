@@ -1,16 +1,21 @@
 using Microsoft.Maui.Controls;
 using ShopList.ViewModels;
 
-namespace ShopList.Views
+namespace ShopList.Views;
+
+public partial class EstadisticasPage : ContentPage
 {
-    public partial class EstadisticasPage : ContentPage
+    private readonly EstadisticasViewModel _viewModel;
+
+    public EstadisticasPage(EstadisticasViewModel viewModel)
     {
-        EstadisticasViewModel vm;
-        public EstadisticasPage()
-        {
-            InitializeComponent();
-            vm = new EstadisticasViewModel();
-            BindingContext = vm;
-        }
+        InitializeComponent();
+        BindingContext = _viewModel = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.LoadCommand.ExecuteAsync(null);
     }
 }

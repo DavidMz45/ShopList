@@ -2,29 +2,43 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShopList.Views.SettingsPage"
-             Title="Ajustes">
-    <VerticalStackLayout Padding="12">
-        <Label Text="Orden" />
-        <Picker SelectedItem="{Binding Settings.OrderBy}">
-            <Picker.Items>
-                <x:String>Alphabetical</x:String>
-                <x:String>Category</x:String>
-            </Picker.Items>
-        </Picker>
+             Title="Configuración">
+    <ScrollView>
+        <VerticalStackLayout Spacing="16"
+                              SemanticProperties.Description="Configuraciones de la aplicación">
+            <Label Text="Tema"
+                   FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding ThemeOptions}"
+                    SelectedItem="{Binding SelectedTheme}" />
 
-        <Label Text="Tema" />
-        <Picker SelectedItem="{Binding Settings.Theme}">
-            <Picker.Items>
-                <x:String>Light</x:String>
-                <x:String>Dark</x:String>
-            </Picker.Items>
-        </Picker>
+            <Label Text="Orden de la lista"
+                   FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding OrderOptions}"
+                    SelectedItem="{Binding SelectedOrder}" />
 
-        <HorizontalStackLayout VerticalOptions="Center">
-            <Label Text="Confirmar antes de eliminar" VerticalOptions="Center"/>
-            <Switch IsToggled="{Binding Settings.ConfirmBeforeDelete}" />
-        </HorizontalStackLayout>
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Confirmar eliminación"
+                       VerticalOptions="Center" />
+                <Switch Grid.Column="1"
+                        IsToggled="{Binding ConfirmDeletion}" />
+            </Grid>
 
-        <Button Text="Guardar" Command="{Binding SaveCommand}" />
-    </VerticalStackLayout>
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Confirmar limpieza"
+                       VerticalOptions="Center" />
+                <Switch Grid.Column="1"
+                        IsToggled="{Binding ConfirmClear}" />
+            </Grid>
+
+            <Label Text="Tamaño de fuente"
+                   FontAttributes="Bold" />
+            <Slider Minimum="0.8"
+                    Maximum="1.5"
+                    Value="{Binding FontMultiplier}" />
+            <Label Text="{Binding FontMultiplier, StringFormat=Multiplicador actual: {0:F1}}" />
+
+            <Button Text="Guardar"
+                    Command="{Binding SaveCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

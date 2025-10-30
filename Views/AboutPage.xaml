@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShopList.Views.AboutPage"
+             Title="Acerca de">
+    <ScrollView>
+        <VerticalStackLayout Spacing="16"
+                              SemanticProperties.Description="Información de la aplicación">
+            <Label Text="ShopList"
+                   FontAttributes="Bold"
+                   FontSize="{DynamicResource TitleFontSize}" />
+            <Label Text="{Binding Description}" />
+            <Label Text="Versión"
+                   FontAttributes="Bold" />
+            <Label Text="{Binding Version}" />
+            <Label Text="Autor"
+                   FontAttributes="Bold" />
+            <Label Text="{Binding Author}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

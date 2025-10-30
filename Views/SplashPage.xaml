@@ -2,9 +2,23 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShopList.Views.SplashPage"
-             Title="Bienvenido">
-    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <Label Text="ShopList" FontSize="28" HorizontalOptions="Center"/>
-        <ActivityIndicator IsRunning="{Binding IsBusy}" WidthRequest="60" HeightRequest="60"/>
-    </VerticalStackLayout>
+             Title="ShopList"
+             BackgroundColor="{DynamicResource PrimaryColor}">
+    <Grid Padding="24"
+          RowDefinitions="Auto,Auto"
+          VerticalOptions="Center"
+          SemanticProperties.Description="Pantalla de inicio de ShopList">
+        <Label Text="ShopList"
+               FontAttributes="Bold"
+               FontSize="36"
+               TextColor="White"
+               HorizontalOptions="Center" />
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="True"
+                           Color="White"
+                           Margin="0,24,0,0"
+                           WidthRequest="48"
+                           HeightRequest="48"
+                           HorizontalOptions="Center" />
+    </Grid>
 </ContentPage>

@@ -1,21 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ShopList.Views"
              x:Class="ShopList.Views.CategoriasPage"
              Title="Categorías">
-    <VerticalStackLayout Padding="12">
-        <Entry Placeholder="Nueva categoría" Text="{Binding NewName}" />
-        <Button Text="Agregar" Command="{Binding AddCommand}" />
-        <CollectionView ItemsSource="{Binding Categories}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="6" ColumnDefinitions="*,Auto">
-                        <Label Text="{Binding Name}" />
-                        <Button Text="Eliminar" Grid.Column="1" Command="{Binding Source={RelativeSource AncestorType={x:Type local:CategoriasPage}}, Path=BindingContext.DeleteCommand}" CommandParameter="{Binding .}" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Spacing="16"
+                              SemanticProperties.Description="Gestión de categorías">
+            <Label Text="Nombre de la categoría"
+                   FontAttributes="Bold" />
+            <Entry Text="{Binding CategoryName}"
+                   Placeholder="Ej. Bebidas"
+                   MaxLength="80" />
+            <Button Text="Guardar"
+                    Command="{Binding SaveCommand}" />
+            <Button Text="Nueva"
+                    BackgroundColor="Transparent"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    Command="{Binding StartNewCommand}" />
+
+            <CollectionView ItemsSource="{Binding Categories}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12"
+                               Margin="0,4"
+                               CornerRadius="12"
+                               BackgroundColor="{DynamicResource CardBackgroundColor}">
+                            <Grid ColumnDefinitions="*,Auto,Auto"
+                                  ColumnSpacing="12">
+                                <Label Text="{Binding Name}"
+                                       FontSize="{DynamicResource BodyFontSize}" />
+                                <Button Grid.Column="1"
+                                        Text="✎"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectCommand}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Grid.Column="2"
+                                        Text="🗑"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

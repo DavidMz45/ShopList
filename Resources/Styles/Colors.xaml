@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <OnAppTheme x:Key="PrimaryColor" x:TypeArguments="Color">
+        <OnAppTheme.Light>#2F80ED</OnAppTheme.Light>
+        <OnAppTheme.Dark>#6FA8FF</OnAppTheme.Dark>
+    </OnAppTheme>
+    <OnAppTheme x:Key="SecondaryColor" x:TypeArguments="Color">
+        <OnAppTheme.Light>#56CCF2</OnAppTheme.Light>
+        <OnAppTheme.Dark>#8DD1FF</OnAppTheme.Dark>
+    </OnAppTheme>
+    <OnAppTheme x:Key="AccentColor" x:TypeArguments="Color">
+        <OnAppTheme.Light>#27AE60</OnAppTheme.Light>
+        <OnAppTheme.Dark>#6FCF97</OnAppTheme.Dark>
+    </OnAppTheme>
+    <OnAppTheme x:Key="BackgroundColor" x:TypeArguments="Color">
+        <OnAppTheme.Light>#FFFFFF</OnAppTheme.Light>
+        <OnAppTheme.Dark>#121212</OnAppTheme.Dark>
+    </OnAppTheme>
+    <OnAppTheme x:Key="CardBackgroundColor" x:TypeArguments="Color">
+        <OnAppTheme.Light>#F2F2F2</OnAppTheme.Light>
+        <OnAppTheme.Dark>#1F1F1F</OnAppTheme.Dark>
+    </OnAppTheme>
+    <OnAppTheme x:Key="TextPrimaryColor" x:TypeArguments="Color">
+        <OnAppTheme.Light>#222222</OnAppTheme.Light>
+        <OnAppTheme.Dark>#FFFFFF</OnAppTheme.Dark>
+    </OnAppTheme>
+    <OnAppTheme x:Key="TextSecondaryColor" x:TypeArguments="Color">
+        <OnAppTheme.Light>#4F4F4F</OnAppTheme.Light>
+        <OnAppTheme.Dark>#E0E0E0</OnAppTheme.Dark>
+    </OnAppTheme>
+</ResourceDictionary>

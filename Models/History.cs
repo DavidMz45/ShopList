@@ -1,16 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using SQLite;
 
 namespace ShopList.Models;
 
-public class TemplateList
+public class History
 {
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
-    [MaxLength(80)]
-    public string Name { get; set; } = string.Empty;
+    public DateTime Date { get; set; } = DateTime.UtcNow;
 
     public string ItemsJson { get; set; } = "[]";
 

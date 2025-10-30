@@ -3,9 +3,9 @@ using ShopList.ViewModels;
 
 namespace ShopList.Views;
 
-public partial class SettingsPage : ContentPage
+public partial class AboutPage : ContentPage
 {
-    public SettingsPage(SettingsViewModel viewModel)
+    public AboutPage(AboutViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

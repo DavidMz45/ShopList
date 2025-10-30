@@ -1,16 +1,21 @@
 using Microsoft.Maui.Controls;
 using ShopList.ViewModels;
 
-namespace ShopList.Views
+namespace ShopList.Views;
+
+public partial class CategoriasPage : ContentPage
 {
-    public partial class CategoriasPage : ContentPage
+    private readonly CategoriasViewModel _viewModel;
+
+    public CategoriasPage(CategoriasViewModel viewModel)
     {
-        CategoriasViewModel vm;
-        public CategoriasPage()
-        {
-            InitializeComponent();
-            vm = new CategoriasViewModel();
-            BindingContext = vm;
-        }
+        InitializeComponent();
+        BindingContext = _viewModel = viewModel;
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.LoadCommand.ExecuteAsync(null);
     }
 }

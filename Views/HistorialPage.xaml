@@ -3,22 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShopList.Views.HistorialPage"
              Title="Historial">
-    <CollectionView ItemsSource="{Binding Items}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame Margin="8">
-                    <VerticalStackLayout>
-                        <Label Text="{Binding CompletedAt, StringFormat='Completado: {0:dd/MM/yyyy HH:mm}'}" FontAttributes="Bold"/>
-                        <CollectionView ItemsSource="{Binding Products}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Label Text="{Binding Name}" FontSize="14"/>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <ScrollView>
+        <VerticalStackLayout Spacing="16"
+                              SemanticProperties.Description="Historial de compras">
+            <CollectionView ItemsSource="{Binding HistoryItems}"
+                            SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="24"
+                                 HorizontalOptions="Center">
+                        <Label Text="Aún no hay historial disponible." />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12"
+                               Margin="0,4"
+                               CornerRadius="12"
+                               BackgroundColor="{DynamicResource CardBackgroundColor}">
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="{Binding Date, StringFormat='Fecha: {0:dd/MM/yyyy HH:mm}'}"
+                                       FontAttributes="Bold" />
+                                <FlexLayout Wrap="Wrap"
+                                            BindableLayout.ItemsSource="{Binding Items}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Frame Padding="4"
+                                                   Margin="2"
+                                                   BackgroundColor="{DynamicResource SecondaryColor}">
+                                                <Label Text="{Binding Name}" />
+                                            </Frame>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </FlexLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
